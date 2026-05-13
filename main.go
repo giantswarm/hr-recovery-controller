@@ -82,7 +82,7 @@ func main() {
 
 	r := &controller.Reconciler{
 		Client:        mgr.GetClient(),
-		Recorder:      mgr.GetEventRecorderFor("hr-recovery-controller"),
+		Recorder:      mgr.GetEventRecorder("hr-recovery-controller"),
 		MaxPokes:      maxPokes,
 		Backoff:       backoff,
 		LabelSelector: selector,

@@ -12,7 +12,7 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/client-go/tools/record"
+	"k8s.io/client-go/tools/events"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
@@ -30,11 +30,11 @@ func newScheme(t *testing.T) *runtime.Scheme {
 	return s
 }
 
-func newReconciler(t *testing.T, now time.Time, objs ...client.Object) (*Reconciler, *record.FakeRecorder) {
+func newReconciler(t *testing.T, now time.Time, objs ...client.Object) (*Reconciler, *events.FakeRecorder) {
 	t.Helper()
 	s := newScheme(t)
 	c := fake.NewClientBuilder().WithScheme(s).WithObjects(objs...).Build()
-	rec := record.NewFakeRecorder(16)
+	rec := events.NewFakeRecorder(16)
 	return &Reconciler{
 		Client:   c,
 		Recorder: rec,
