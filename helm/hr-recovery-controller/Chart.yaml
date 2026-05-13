@@ -19,4 +19,4 @@ version: 0.0.0-dev
 annotations:
   io.giantswarm.application.audience: giantswarm
   io.giantswarm.application.managed: "true"
-  io.giantswarm.application.team: honeybadger
+  io.giantswarm.application.team: bumblebee
