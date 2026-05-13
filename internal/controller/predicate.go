@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	stalledConditionType   = "Stalled"
-	readyConditionType     = "Ready"
-	missingRollbackTarget  = "MissingRollbackTarget"
+	stalledConditionType  = "Stalled"
+	readyConditionType    = "Ready"
+	missingRollbackTarget = "MissingRollbackTarget"
 )
 
 func isStuck(obj client.Object) bool {
