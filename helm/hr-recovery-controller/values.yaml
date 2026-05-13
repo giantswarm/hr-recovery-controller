@@ -17,8 +17,6 @@ controller:
   maxPokes: 10
   # Minimum interval between pokes for the same HelmRelease (Go duration).
   backoff: 5m
-  # If set, only act on HelmReleases in namespaces with this prefix.
-  namespacePrefix: ""
   # If set, only watch HelmReleases matching this label selector.
   watchLabelSelector: ""
 

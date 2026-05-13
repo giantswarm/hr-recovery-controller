@@ -32,7 +32,6 @@ func main() {
 		leaderElect        bool
 		maxPokes           int
 		backoff            time.Duration
-		namespacePrefix    string
 		watchLabelSelector string
 	)
 
@@ -41,7 +40,6 @@ func main() {
 	flag.BoolVar(&leaderElect, "leader-elect", false, "Enable leader election.")
 	flag.IntVar(&maxPokes, "max-pokes", 10, "Maximum number of pokes per HelmRelease before giving up.")
 	flag.DurationVar(&backoff, "backoff", 5*time.Minute, "Minimum interval between pokes for the same HelmRelease.")
-	flag.StringVar(&namespacePrefix, "namespace-prefix", "", "If set, only act on HelmReleases in namespaces with this prefix.")
 	flag.StringVar(&watchLabelSelector, "watch-label-selector", "", "If set, only watch HelmReleases matching this label selector.")
 
 	opts := zap.Options{Development: false}
@@ -83,12 +81,11 @@ func main() {
 	}
 
 	r := &controller.Reconciler{
-		Client:          mgr.GetClient(),
-		Recorder:        mgr.GetEventRecorderFor("hr-recovery-controller"),
-		MaxPokes:        maxPokes,
-		Backoff:         backoff,
-		NamespacePrefix: namespacePrefix,
-		LabelSelector:   selector,
+		Client:        mgr.GetClient(),
+		Recorder:      mgr.GetEventRecorderFor("hr-recovery-controller"),
+		MaxPokes:      maxPokes,
+		Backoff:       backoff,
+		LabelSelector: selector,
 	}
 	if err := r.SetupWithManager(mgr); err != nil {
 		ctrl.Log.Error(err, "unable to set up reconciler")

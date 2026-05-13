@@ -9,6 +9,7 @@ import (
 	helmv2 "github.com/fluxcd/helm-controller/api/v2"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/tools/record"
@@ -283,17 +284,21 @@ func TestReconcile_BeingDeleted(t *testing.T) {
 	}
 }
 
-func TestInScope_NamespacePrefix(t *testing.T) {
+func TestInScope_LabelSelector(t *testing.T) {
 	now := time.Unix(1_700_000_000, 0)
-	hr := stuckHR("a", "kube-system", nil)
+	hr := stuckHR("a", "org-x", nil)
 	r, _ := newReconciler(t, now, hr)
-	r.NamespacePrefix = "org-"
+	sel, err := labels.Parse("giantswarm.io/managed-by=cluster-aws")
+	if err != nil {
+		t.Fatalf("parse selector: %v", err)
+	}
+	r.LabelSelector = sel
 
-	reconcile(t, r, "a", "kube-system")
+	reconcile(t, r, "a", "org-x")
 
-	got := getHR(t, r, "a", "kube-system")
+	got := getHR(t, r, "a", "org-x")
 	if _, ok := got.Annotations[AnnotationPokeCount]; ok {
-		t.Errorf("namespace-prefix scope must skip kube-system, got annotations: %+v", got.Annotations)
+		t.Errorf("label-selector scope must skip unlabeled HR, got annotations: %+v", got.Annotations)
 	}
 }
 

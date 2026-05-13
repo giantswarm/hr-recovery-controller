@@ -27,9 +27,6 @@ spec:
             - --health-probe-bind-address=:8081
             - --max-pokes={{ .Values.controller.maxPokes }}
             - --backoff={{ .Values.controller.backoff }}
-            {{- with .Values.controller.namespacePrefix }}
-            - --namespace-prefix={{ . }}
-            {{- end }}
             {{- with .Values.controller.watchLabelSelector }}
             - --watch-label-selector={{ . }}
             {{- end }}

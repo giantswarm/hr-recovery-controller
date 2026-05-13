@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	helmv2 "github.com/fluxcd/helm-controller/api/v2"
@@ -33,11 +32,10 @@ const (
 // Stalled=True / reason=MissingRollbackTarget by force-poking them.
 type Reconciler struct {
 	client.Client
-	Recorder        record.EventRecorder
-	MaxPokes        int
-	Backoff         time.Duration
-	NamespacePrefix string
-	LabelSelector   labels.Selector
+	Recorder      record.EventRecorder
+	MaxPokes      int
+	Backoff       time.Duration
+	LabelSelector labels.Selector
 
 	// now is injectable for tests.
 	now func() time.Time
@@ -54,7 +52,7 @@ func (r *Reconciler) SetupWithManager(mgr ctrl.Manager) error {
 }
 
 func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	logger := log.FromContext(ctx).WithValues("helmrelease", req.NamespacedName)
+	logger := log.FromContext(ctx)
 
 	var hr helmv2.HelmRelease
 	if err := r.Get(ctx, req.NamespacedName, &hr); err != nil {
@@ -134,9 +132,6 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 }
 
 func (r *Reconciler) inScope(hr *helmv2.HelmRelease) bool {
-	if r.NamespacePrefix != "" && !strings.HasPrefix(hr.Namespace, r.NamespacePrefix) {
-		return false
-	}
 	if r.LabelSelector != nil && !r.LabelSelector.Matches(labels.Set(hr.Labels)) {
 		return false
 	}
