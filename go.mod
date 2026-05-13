@@ -3,7 +3,7 @@ module github.com/giantswarm/hr-recovery-controller
 go 1.26.0
 
 require (
-	github.com/fluxcd/helm-controller/api v1.3.0
+	github.com/fluxcd/helm-controller/api v1.5.4
 	github.com/prometheus/client_golang v1.23.2
 	k8s.io/api v0.36.1
 	k8s.io/apimachinery v0.36.1
@@ -17,8 +17,8 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
-	github.com/fluxcd/pkg/apis/kustomize v1.10.0 // indirect
-	github.com/fluxcd/pkg/apis/meta v1.12.0 // indirect
+	github.com/fluxcd/pkg/apis/kustomize v1.15.1 // indirect
+	github.com/fluxcd/pkg/apis/meta v1.25.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
