@@ -12,7 +12,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/client-go/tools/record"
+	"k8s.io/client-go/tools/events"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/builder"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -32,7 +32,7 @@ const (
 // Stalled=True / reason=MissingRollbackTarget by force-poking them.
 type Reconciler struct {
 	client.Client
-	Recorder      record.EventRecorder
+	Recorder      events.EventRecorder
 	MaxPokes      int
 	Backoff       time.Duration
 	LabelSelector labels.Selector
@@ -106,7 +106,7 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 	count, _ := strconv.Atoi(hr.Annotations[AnnotationPokeCount])
 	if count >= r.MaxPokes {
 		logger.Info("max pokes reached; giving up", "count", count, "max", r.MaxPokes)
-		r.Recorder.Eventf(&hr, "Warning", "RecoveryGaveUp",
+		r.Recorder.Eventf(&hr, nil, "Warning", "RecoveryGaveUp", "GaveUp",
 			"Gave up after %d pokes", count)
 		giveupsTotal.WithLabelValues(req.Namespace, req.Name).Inc()
 		return ctrl.Result{}, nil
@@ -124,7 +124,7 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 	}
 
 	logger.Info("poked stuck HR", "count", next, "token", token)
-	r.Recorder.Eventf(&hr, "Normal", "RecoveryPoke",
+	r.Recorder.Eventf(&hr, nil, "Normal", "RecoveryPoke", "Poked",
 		"Poke %d (token %s)", next, token)
 	pokesTotal.WithLabelValues(req.Namespace, req.Name).Inc()
 

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bumped `sigs.k8s.io/controller-runtime` to v0.24.1 and the `k8s.io/{api,apimachinery,client-go}` modules to v0.36.1.
+- Migrated from the deprecated `record.EventRecorder` (old events API) to `events.EventRecorder` (new events API).
+
 ## [0.0.1] - 2026-05-13
 
 ### Added
