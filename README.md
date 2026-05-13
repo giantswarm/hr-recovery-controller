@@ -16,6 +16,7 @@ A small Kubernetes controller that auto-recovers Flux `HelmRelease` resources we
 - `status.conditions[Stalled].reason == MissingRollbackTarget`
 
 **Skip conditions:**
+- `metadata.deletionTimestamp` set (HR is being deleted)
 - `spec.suspend == true`
 - annotation `hr-recovery.giantswarm.io/skip: "true"`
 - annotation `hr-recovery.giantswarm.io/poke-count` ≥ `--max-pokes` (default 10)

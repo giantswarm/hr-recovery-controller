@@ -61,6 +61,10 @@ func (r *Reconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Resu
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+	if !hr.DeletionTimestamp.IsZero() {
+		return ctrl.Result{}, nil
+	}
+
 	if !r.inScope(&hr) {
 		return ctrl.Result{}, nil
 	}

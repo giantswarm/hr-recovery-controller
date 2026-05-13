@@ -267,6 +267,22 @@ func TestReconcile_NotStuckAndNotReadyIsNoop(t *testing.T) {
 	}
 }
 
+func TestReconcile_BeingDeleted(t *testing.T) {
+	now := time.Unix(1_700_000_000, 0)
+	hr := stuckHR("a", "org-x", nil)
+	deletionTime := metav1.NewTime(now.Add(-time.Minute))
+	hr.DeletionTimestamp = &deletionTime
+	hr.Finalizers = []string{"finalizers.fluxcd.io"}
+	r, _ := newReconciler(t, now, hr)
+
+	reconcile(t, r, "a", "org-x")
+
+	got := getHR(t, r, "a", "org-x")
+	if _, ok := got.Annotations[AnnotationPokeCount]; ok {
+		t.Errorf("HR being deleted must not be poked, got annotations: %+v", got.Annotations)
+	}
+}
+
 func TestInScope_NamespacePrefix(t *testing.T) {
 	now := time.Unix(1_700_000_000, 0)
 	hr := stuckHR("a", "kube-system", nil)
