@@ -1,0 +1,71 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "image": {
+            "type": "object",
+            "description": "Container image used to run the controller.",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Image repository path (without registry domain)."
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Image tag. Defaults to .Chart.AppVersion when empty."
+                }
+            }
+        },
+        "registry": {
+            "type": "object",
+            "description": "Container registry where the image is hosted.",
+            "properties": {
+                "domain": {
+                    "type": "string",
+                    "description": "Fully qualified domain of the container registry."
+                }
+            }
+        },
+        "controller": {
+            "type": "object",
+            "description": "Controller behavior knobs.",
+            "properties": {
+                "maxPokes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Maximum number of pokes per HelmRelease before giving up."
+                },
+                "backoff": {
+                    "type": "string",
+                    "description": "Minimum interval between pokes for the same HelmRelease, as a Go duration (e.g. \"5m\")."
+                },
+                "watchLabelSelector": {
+                    "type": "string",
+                    "description": "If set, only watch HelmReleases matching this label selector (Kubernetes label selector syntax)."
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Pod resource requests and limits for the controller container."
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Security context applied at the pod level."
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Security context applied at the container level."
+        },
+        "metrics": {
+            "type": "object",
+            "description": "Prometheus metrics endpoint configuration.",
+            "properties": {
+                "port": {
+                    "type": "integer",
+                    "description": "TCP port the controller serves Prometheus metrics on."
+                }
+            }
+        }
+    }
+}

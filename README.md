@@ -3,16 +3,31 @@
 
 [Guide about how to manage an app on Giant Swarm](https://handbook.giantswarm.io/docs/dev-and-releng/app-developer-processes/adding_app_to_appcatalog/)
 
-# hr-recovery-controller chart
+# hr-recovery-controller
 
-Giant Swarm offers a hr-recovery-controller App which can be installed in workload clusters.
-Here, we define the hr-recovery-controller chart with its templates and default configuration.
+A small Kubernetes controller that auto-recovers Flux `HelmRelease` resources wedged on `Stalled=True, reason=MissingRollbackTarget`. This condition is hit during the Giant Swarm App-CR → HelmRelease migration when a transient Kyverno admission-controller restart causes a helm upgrade to fail, and helm-controller cannot roll back because the previous release was installed by chart-operator (no `Snapshot` in `status.History`).
 
-**What is this app?**
+**What it does.** Watches all `HelmRelease` objects, detects the wedge fingerprint, and patches `reconcile.fluxcd.io/forceAt` + `reconcile.fluxcd.io/requestedAt` with a fresh token to force helm-controller to retry the upgrade. By the time the controller pokes, the underlying Kyverno race has long settled, so the retry succeeds on first try.
 
-**Why did we add it?**
+**Why we ship it.** Manual `flux suspend` / `flux resume` is operationally untenable for a fleet-wide migration. The controller is finite-life: it will be retired once the Kyverno chart ships a `preStop` hook closing the EndpointSlice-vs-listener propagation gap.
 
-**Who can use it?**
+**Detection criteria.** An HR is poked when:
+- `status.conditions[Stalled].status == True`
+- `status.conditions[Stalled].reason == MissingRollbackTarget`
+
+**Skip conditions:**
+- `metadata.deletionTimestamp` set (HR is being deleted)
+- `spec.suspend == true`
+- annotation `hr-recovery.giantswarm.io/skip: "true"`
+- annotation `hr-recovery.giantswarm.io/poke-count` ≥ `--max-pokes` (default 10)
+- last poke less than `--backoff` ago (default 5m)
+
+**Metrics** (`/metrics` on `:8080`):
+- `hr_recovery_pokes_total{namespace,hr_name}`
+- `hr_recovery_successes_total{namespace,hr_name}` (incremented on `Ready=True` after at least one poke)
+- `hr_recovery_giveups_total{namespace,hr_name}` (alert on this — a give-up means a human needs to look)
+
+See `PLAN_UNSTUCK_CONTROLLER.md` in this repo for the full design rationale and validation plan.
 
 ## Installing
 

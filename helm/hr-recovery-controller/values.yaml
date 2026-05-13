@@ -1,0 +1,45 @@
+# This file is a Helm values file for the hr-recovery-controller chart.
+#
+# To learn more about how to configure your app on your cluster
+# and override the default values in here, visit:
+#
+#   https://docs.giantswarm.io/tutorials/fleet-management/app-platform/app-configuration/#basic-values-merging-example
+#
+image:
+  name: "giantswarm/hr-recovery-controller"
+  tag: ""
+registry:
+  domain: gsoci.azurecr.io
+
+# Controller behavior knobs.
+controller:
+  # Maximum number of pokes per HelmRelease before giving up.
+  maxPokes: 10
+  # Minimum interval between pokes for the same HelmRelease (Go duration).
+  backoff: 5m
+  # If set, only watch HelmReleases matching this label selector.
+  watchLabelSelector: ""
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+# Prometheus scrape settings used by the Service annotations.
+metrics:
+  port: 8080
