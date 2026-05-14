@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] - 2026-05-14
+
 ### Added
 
 - NetworkPolicy that allows the controller pod to reach the kube-apiserver (egress all) and lets Prometheus scrape `/metrics` (ingress on the metrics port). Required because the `giantswarm` namespace has a `default-deny-all` policy that was silently blocking the informer.
@@ -30,7 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial controller implementation. Watches `HelmRelease` resources cluster-wide and force-pokes any HR wedged on `Stalled=True, reason=MissingRollbackTarget` (the chart-operator → helm-controller migration wedge).
 
-[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.3...HEAD
+[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/giantswarm/hr-recovery-controller/releases/tag/v0.0.1
