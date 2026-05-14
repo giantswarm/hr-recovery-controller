@@ -2,14 +2,14 @@
 # for details and background.
 
 apiVersion: v2
-appVersion: 0.0.1
+appVersion: 0.0.2
 name: hr-recovery-controller
 description: Controller that auto-recovers HelmReleases wedged on Stalled=MissingRollbackTarget by force-poking them.
 home: https://github.com/giantswarm/hr-recovery-controller
 icon: https://s.giantswarm.io/app-icons/giantswarm/1/light.svg
 sources:
   - https://github.com/giantswarm/hr-recovery-controller
-version: 0.0.1
+version: 0.0.2
 annotations:
   io.giantswarm.application.audience: giantswarm
   io.giantswarm.application.managed: "true"

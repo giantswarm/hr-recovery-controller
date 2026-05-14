@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2026-05-14
+
 ### Changed
 
 - Bumped `sigs.k8s.io/controller-runtime` to v0.24.1 and the `k8s.io/{api,apimachinery,client-go}` modules to v0.36.1.
@@ -18,5 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial controller implementation. Watches `HelmRelease` resources cluster-wide and force-pokes any HR wedged on `Stalled=True, reason=MissingRollbackTarget` (the chart-operator → helm-controller migration wedge).
 
-[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/giantswarm/hr-recovery-controller/releases/tag/v0.0.1
