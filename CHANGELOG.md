@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Add a circleci job to push the container image to the container registry.
+
 ## [0.0.2] - 2026-05-14
 
 ### Changed
