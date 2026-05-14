@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- NetworkPolicy that allows the controller pod to reach the kube-apiserver (egress all) and lets Prometheus scrape `/metrics` (ingress on the metrics port). Required because the `giantswarm` namespace has a `default-deny-all` policy that was silently blocking the informer.
+
 ## [0.0.3] - 2026-05-14
 
 ### Changed
