@@ -3,7 +3,7 @@ module github.com/giantswarm/hr-recovery-controller
 go 1.26.0
 
 require (
-	github.com/fluxcd/helm-controller/api v1.5.4
+	github.com/fluxcd/helm-controller/api v1.5.5
 	github.com/prometheus/client_golang v1.23.2
 	k8s.io/api v0.36.1
 	k8s.io/apimachinery v0.36.1
