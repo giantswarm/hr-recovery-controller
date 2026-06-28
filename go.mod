@@ -65,3 +65,13 @@ require (
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.2 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
+
+// Transitive-only deps (pulled via k8s libraries, not imported here) flagged by
+// nancy: pin to fixed versions. CVE-2026-41178 (baggage DoS, fixed in 1.44.0)
+// and CVE-2026-39883 (BSD/Solaris PATH hijack in resource detection, fixed in
+// 1.43.0). A replace is required because tidy drops explicit requires for
+// modules the build never imports.
+replace (
+	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.44.0
+	go.opentelemetry.io/otel/sdk => go.opentelemetry.io/otel/sdk v1.44.0
+)
