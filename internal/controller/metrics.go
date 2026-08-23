@@ -5,13 +5,18 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 )
 
+const (
+	labelNamespace = "namespace"
+	labelHRName    = "hr_name"
+)
+
 var (
 	pokesTotal = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "hr_recovery_pokes_total",
 			Help: "Number of times the controller has poked a stuck HelmRelease.",
 		},
-		[]string{"namespace", "hr_name"},
+		[]string{labelNamespace, labelHRName},
 	)
 
 	successesTotal = prometheus.NewCounterVec(
@@ -19,7 +24,7 @@ var (
 			Name: "hr_recovery_successes_total",
 			Help: "Number of HelmReleases that recovered to Ready=True after at least one poke.",
 		},
-		[]string{"namespace", "hr_name"},
+		[]string{labelNamespace, labelHRName},
 	)
 
 	giveupsTotal = prometheus.NewCounterVec(
@@ -27,7 +32,7 @@ var (
 			Name: "hr_recovery_giveups_total",
 			Help: "Number of times the controller has given up on a stuck HelmRelease after exceeding max-pokes.",
 		},
-		[]string{"namespace", "hr_name"},
+		[]string{labelNamespace, labelHRName},
 	)
 )
 
