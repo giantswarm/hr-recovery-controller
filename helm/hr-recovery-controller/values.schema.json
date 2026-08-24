@@ -3,6 +3,37 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "baseDomain": {
+            "type": "string"
+        },
+        "bootstrapMode": {
+            "type": "object",
+            "additionalProperties": true
+        },
+        "chartOperator": {
+            "type": "object",
+            "additionalProperties": true
+        },
+        "ciliumNetworkPolicy": {
+            "type": "object",
+            "additionalProperties": true
+        },
+        "cluster": {
+            "type": "object",
+            "additionalProperties": true
+        },
+        "clusterCA": {
+            "type": "string"
+        },
+        "clusterCIDR": {
+            "type": "string"
+        },
+        "clusterDNSIP": {
+            "type": "string"
+        },
+        "clusterID": {
+            "type": "string"
+        },
         "controller": {
             "type": "object",
             "additionalProperties": false,
@@ -17,6 +48,9 @@
                     "type": "string"
                 }
             }
+        },
+        "gcpProject": {
+            "type": "string"
         },
         "global": {
             "type": [
@@ -64,6 +98,9 @@
                     }
                 }
             }
+        },
+        "provider": {
+            "type": "string"
         },
         "registry": {
             "type": "object",
@@ -127,6 +164,9 @@
                     "type": "boolean"
                 }
             }
+        },
+        "subscriptionID": {
+            "type": "string"
         }
     }
 }
