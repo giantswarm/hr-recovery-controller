@@ -83,3 +83,10 @@ replace (
 	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.46.0
 	go.opentelemetry.io/otel/sdk => go.opentelemetry.io/otel/sdk v1.46.0
 )
+
+// Pin transitive modules flagged by the OSS Index scan (nancy) in CI.
+// go mod tidy would otherwise resolve them below the fixed versions,
+// because nothing imports them directly.
+replace golang.org/x/mod => golang.org/x/mod v0.40.0
+
+replace golang.org/x/crypto => golang.org/x/crypto v0.55.0
