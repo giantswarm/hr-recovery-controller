@@ -80,8 +80,8 @@ require (
 // 1.43.0). A replace is required because tidy drops explicit requires for
 // modules the build never imports.
 replace (
-	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.46.0
-	go.opentelemetry.io/otel/sdk => go.opentelemetry.io/otel/sdk v1.46.0
+	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.47.0
+	go.opentelemetry.io/otel/sdk => go.opentelemetry.io/otel/sdk v1.47.0
 )
 
 // Pin transitive modules flagged by the OSS Index scan (nancy) in CI.
