@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.47] - 2026-09-24
+
 ### Fixed
 
 - The `helm.sh/chart` label is valid for any chart version: a long version cut to 63 characters on `.`, `_` or `-` no longer makes the API server refuse the chart's objects.
@@ -36,7 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial controller implementation. Watches `HelmRelease` resources cluster-wide and force-pokes any HR wedged on `Stalled=True, reason=MissingRollbackTarget` (the chart-operator → helm-controller migration wedge).
 
-[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.4...HEAD
+[Unreleased]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.47...HEAD
+[0.0.47]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.4...v0.0.47
 [0.0.4]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/giantswarm/hr-recovery-controller/compare/v0.0.1...v0.0.2
