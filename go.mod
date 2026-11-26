@@ -5,9 +5,9 @@ go 1.27.0
 require (
 	github.com/fluxcd/helm-controller/api v1.7.2
 	github.com/prometheus/client_golang v1.25.0
-	k8s.io/api v0.37.2
-	k8s.io/apimachinery v0.37.2
-	k8s.io/client-go v0.37.2
+	k8s.io/api v0.37.3
+	k8s.io/apimachinery v0.37.3
+	k8s.io/client-go v0.37.3
 	sigs.k8s.io/controller-runtime v0.25.3
 )
 
